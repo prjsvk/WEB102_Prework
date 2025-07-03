@@ -31,7 +31,7 @@
 ## 🎥 Demo Walkthrough  
 
 Here’s a walkthrough of the implemented features:  
-![Video Walkthrough](https://go.screenpal.com/watch/cTie2DnlbWH) 
+https://go.screenpal.com/watch/cTie2DnlbWH 
 
 ---
 
@@ -51,13 +51,6 @@ Here are some ideas to take the app even further:
 | 📢 **Social Sharing** | Share games easily to social platforms. |
 
 ---
-
-## 📄 License  
-
-**© 2025 Surya Varun Kolachana**  
-Licensed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
-> This project is distributed "AS IS", without warranties or conditions of any kind. For full details, see the LICENSE file.
 
 
 ## License
