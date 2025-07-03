@@ -9,6 +9,9 @@ const totalGamesEl = document.getElementById('total-games');
 const totalFundingEl = document.getElementById('total-funding');
 const avgGoalEl = document.getElementById('avg-goal');
 const avgPledgedEl = document.getElementById('avg-pledged');
+const unfundedCountEl = document.getElementById('unfunded-count');
+const topGame1El = document.getElementById('top-game1');
+const topGame2El = document.getElementById('top-game2');
 
 // Initialize
 let currentFilter = 'all';
@@ -22,6 +25,7 @@ showAllBtn.addEventListener('click', () => {
   currentFilter = 'all';
   updateActiveButton();
   displayGames(games);
+  updateStats(games);
 });
 
 showFundedBtn.addEventListener('click', () => {
@@ -29,6 +33,7 @@ showFundedBtn.addEventListener('click', () => {
   updateActiveButton();
   const fundedGames = games.filter(game => game.pledged >= game.goal);
   displayGames(fundedGames);
+  updateStats(fundedGames);
 });
 
 showUnfundedBtn.addEventListener('click', () => {
@@ -36,6 +41,7 @@ showUnfundedBtn.addEventListener('click', () => {
   updateActiveButton();
   const unfundedGames = games.filter(game => game.pledged < game.goal);
   displayGames(unfundedGames);
+  updateStats(unfundedGames);
 });
 
 // Helper Functions
@@ -97,14 +103,34 @@ function displayGames(gamesToDisplay) {
 }
 
 function updateStats(gamesArray) {
+  // Basic stats
   totalGamesEl.textContent = gamesArray.length;
   
   const totalFunding = gamesArray.reduce((sum, game) => sum + game.pledged, 0);
   totalFundingEl.textContent = `$${totalFunding.toLocaleString()}`;
   
-  const avgGoal = gamesArray.reduce((sum, game) => sum + game.goal, 0) / gamesArray.length;
+  const avgGoal = gamesArray.reduce((sum, game) => sum + game.goal, 0) / gamesArray.length || 0;
   avgGoalEl.textContent = `$${Math.round(avgGoal).toLocaleString()}`;
   
-  const avgPledged = gamesArray.reduce((sum, game) => sum + game.pledged, 0) / gamesArray.length;
+  const avgPledged = gamesArray.reduce((sum, game) => sum + game.pledged, 0) / gamesArray.length || 0;
   avgPledgedEl.textContent = `$${Math.round(avgPledged).toLocaleString()}`;
+  
+  // Unfunded count
+  const unfundedCount = gamesArray.filter(game => game.pledged < game.goal).length;
+  unfundedCountEl.textContent = unfundedCount;
+  
+  // Top funded games
+  const sortedGames = [...gamesArray].sort((a, b) => b.pledged - a.pledged);
+  
+  if (sortedGames.length > 0) {
+    topGame1El.textContent = `${sortedGames[0].title} ($${sortedGames[0].pledged.toLocaleString()})`;
+  } else {
+    topGame1El.textContent = '-';
+  }
+  
+  if (sortedGames.length > 1) {
+    topGame2El.textContent = `${sortedGames[1].title} ($${sortedGames[1].pledged.toLocaleString()})`;
+  } else {
+    topGame2El.textContent = '-';
+  }
 }
